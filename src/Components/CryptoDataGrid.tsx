@@ -3,8 +3,9 @@ import Box from "@mui/material/Box";
 import { Button } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useTheme } from "@mui/material";
-import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+// import { AddOutlinedIcon } from "@mui/icons-material";
 import { DataGridLogics } from "../Utils/DataGridLogics";
+import SearchInput from "./SearchInput";
 type Props = {};
 
 const CryptoDataGrid = (props: Props) => {
@@ -18,7 +19,7 @@ const CryptoDataGrid = (props: Props) => {
       type: "image",
       headerAlign: "left",
       align: "left",
-      width: 200,
+      width: 180,
       renderCell: (params) => {
         return (
           <div
@@ -30,7 +31,7 @@ const CryptoDataGrid = (props: Props) => {
             }}
           >
             <img style={{ height: 30, width: 30 }} src={params.row.image} />
-            <p style={{textTransform:'uppercase'}}>{params.row.name}</p>
+            <p style={{ textTransform: "uppercase" }}>{params.row.name}</p>
           </div>
         );
       },
@@ -38,21 +39,21 @@ const CryptoDataGrid = (props: Props) => {
     {
       field: "symbol",
       headerName: "Coin-Symbol",
-      width: 80,
+      width: 100,
       editable: true,
       headerAlign: "center",
       align: "center",
       renderCell: (params) => {
-        return(
-            <p style={{textTransform:'uppercase'}}>{params.row.symbol}</p>
-        )
-      }
+        return (
+          <p style={{ textTransform: "uppercase" }}>{params.row.symbol}</p>
+        );
+      },
     },
     {
       field: "current_price",
       headerName: "Price",
       type: "number",
-      width: 80,
+      width: 150,
       editable: true,
       headerAlign: "center",
       align: "center",
@@ -61,7 +62,7 @@ const CryptoDataGrid = (props: Props) => {
       field: "market_cap",
       headerName: "Current Market",
       type: "number",
-      width: 130,
+      width: 230,
       editable: true,
       headerAlign: "center",
       align: "center",
@@ -70,58 +71,113 @@ const CryptoDataGrid = (props: Props) => {
       field: "price_change_percentage_24h",
       headerName: "Price Change Percentage",
       type: "number",
-      width: 120,
+      width: 220,
       editable: true,
       headerAlign: "center",
       align: "center",
+      renderCell: (params) => {
+        const value = params.value;
+        return (
+          <h4
+            style={{
+              color: value > 1 ? "green" : "red",
+            }}
+          >
+            {value}
+          </h4>
+        );
+      },
     },
     {
       field: "actions",
       headerName: "Actions",
       type: "actions",
-      width: 130,
+      width: 230,
       filterable: true,
-          renderCell: (params) => (
-            <Button
-            sx={{
-              height: "31px",
-              width: "88px",
-              "&:hover": {
-                backgroundColor: theme.palette.secondary.main,
-                scale: "1.1",
-              },
-              transition: ".5s",
-              boxShadow: `0.5px 1.5px 9px 1px rgba(0,0,0,0.2)`,
-              margin: "12px",
-              borderRadius: "5px",
-              fontFamily: "Poppins",
-              fontSize: "12px",
-              textTransform: "none",
-              color: theme.palette.info.main,
+      headerAlign: "right",
+      align: "right",
+      renderCell: (params) => (
+        <Button
+          sx={{
+            height: "31px",
+            // width: "88px",
+            "&:hover": {
               backgroundColor: theme.palette.secondary.main,
-            }}
-            startIcon={<AddOutlinedIcon />}
-          >
-            ADD
-          </Button>
-          ),
+              scale: "1.1",
+            },
+            transition: ".5s",
+            boxShadow: `0.5px 1.5px 9px 1px rgba(0,0,0,0.2)`,
+            // margin: "12px",
+            borderRadius: "5px",
+            fontFamily: "Poppins",
+            fontSize: "12px",
+            textTransform: "none",
+            color: theme.palette.info.main,
+            backgroundColor: theme.palette.secondary.main,
+          }}
+          //   startIcon={<AddOutlinedIcon />}
+        >
+          ADD
+        </Button>
+      ),
     },
   ];
-
+  const datas = [
+    {
+      Image: "",
+      Symbol: 11,
+      current_price: 20,
+      market_cap: 22,
+      price_change_percentage_24h: 20,
+    },
+    {
+      Image: "",
+      Symbol: 11,
+      current_price: 20,
+      market_cap: 2,
+      price_change_percentage_24h: -20,
+    },
+    {
+      Image: "",
+      Symbol: 11,
+      current_price: 20,
+      market_cap: 22,
+      price_change_percentage_24h: 20,
+    },
+    {
+      Image: "",
+      Symbol: 11,
+      current_price: 20,
+      market_cap: 2,
+      price_change_percentage_24h: -20,
+    },
+  ];
   return (
-    <div style={{background:'#ffffff',width:'60%'}}>
-      <Box sx={{ width: "95%",margin:'1rem'}}>
+    <div style={{ display: "flex", justifyContent: "center" }}>
+      <Box
+        sx={{
+          background: "#ffffff",
+          width: "80%",
+          margin: "1rem",
+          padding: "2rem 5rem 5rem 5rem",
+        }}
+      >
+        <SearchInput />
         <DataGrid
-          sx={{border:'none',
-          "& .MuiDataGrid-cell": {
-            borderBottom:2,
+          sx={{
+            border: "none",
+            "& .MuiDataGrid-cell": {
+              borderBottom: 2,
             },
-        "& .css-yrdy0g-MuiDataGrid-columnHeaderRow":{
-            borderBottom:5,
-        }}}
-          rows={data ? data : []}
+            "& .css-yrdy0g-MuiDataGrid-columnHeaderRow": {
+              //   borderBottom: 5,
+            },
+          }}
+          rows={datas ? datas : []}
+          //   rows={data ? data : []}
           columns={columns}
-          getRowId={(row: any) => row.market_cap_rank}
+          getRowId={(row: any) => row.market_cap}
+          //   getRowId={(row: any) => row.market_cap_rank}
           initialState={{
             pagination: {
               paginationModel: {
@@ -132,6 +188,7 @@ const CryptoDataGrid = (props: Props) => {
           pageSizeOptions={[5]}
           checkboxSelection={false}
           disableRowSelectionOnClick
+          rowHeight={60}
         />
       </Box>
     </div>
