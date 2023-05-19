@@ -1,19 +1,20 @@
 import React from "react";
-import Box from "@mui/material/Box";
-import { Button } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useTheme } from "@mui/material";
-// import { AddOutlinedIcon } from "@mui/icons-material";
 import { DataGridLogics } from "../Utils/DataGridLogics";
 import QuantityBtn from "./QuantityBtn";
+import { useSelector } from "react-redux";
 type Props = {};
 
 const CartTable = (props: Props) => {
+  const [rowId, setRowId] = React.useState<number>(0);
+  const cartData = useSelector((state: any) => state.CartSlice.cart);
+  const counterValue = useSelector((state: any) => state.CartSlice.counter);
   const theme = useTheme();
   const columns: GridColDef[] = [
     // { field: "market_cap_rank", headerName: "ID", width: 10 },
     {
-      field: "Image",
+      field: "image",
       headerName: "Coin Image",
       type: "image",
       headerAlign: "left",
@@ -53,50 +54,22 @@ const CartTable = (props: Props) => {
       headerName: "Price",
       type: "number",
       width: 150,
-      editable: true,
       headerAlign: "center",
       align: "center",
+      valueGetter: (params: any) =>
+        rowId !== 0 && rowId === params.id
+          ? `${params.row.current_price} X ${counterValue}`
+          : `${params.row.current_price} X 1 `,
     },
     {
       field: "quantity",
       headerName: "Quantity",
       width: 200,
-      editable: true,
       headerAlign: "center",
       align: "center",
-      renderCell: (params) => {
-        return <QuantityBtn />;
+      renderCell: (params: any) => {
+        return <QuantityBtn setRowId={setRowId} id={params.id} />;
       },
-    },
-  ];
-  const datas = [
-    {
-      Image: "",
-      Symbol: 11,
-      current_price: 20,
-      market_cap: 22,
-      price_change_percentage_24h: 20,
-    },
-    {
-      Image: "",
-      Symbol: 11,
-      current_price: 20,
-      market_cap: 2,
-      price_change_percentage_24h: -20,
-    },
-    {
-      Image: "",
-      Symbol: 11,
-      current_price: 20,
-      market_cap: 22,
-      price_change_percentage_24h: 20,
-    },
-    {
-      Image: "",
-      Symbol: 11,
-      current_price: 20,
-      market_cap: 2,
-      price_change_percentage_24h: -20,
     },
   ];
   return (
@@ -112,11 +85,9 @@ const CartTable = (props: Props) => {
             //   borderBottom: 5,
           },
         }}
-        rows={datas ? datas : []}
-        //   rows={data ? data : []}
+        rows={cartData ? cartData : []}
         columns={columns}
-        getRowId={(row: any) => row.market_cap}
-        //   getRowId={(row: any) => row.market_cap_rank}
+        getRowId={(row: any) => row.market_cap_rank}
         initialState={{
           pagination: {
             paginationModel: {

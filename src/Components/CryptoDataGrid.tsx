@@ -3,13 +3,16 @@ import Box from "@mui/material/Box";
 import { Button } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useTheme } from "@mui/material";
-// import { AddOutlinedIcon } from "@mui/icons-material";
+import {Link} from "react-router-dom";
 import { DataGridLogics } from "../Utils/DataGridLogics";
 import SearchInput from "./SearchInput";
+import { useSelector } from "react-redux";
+
 type Props = {};
 
 const CryptoDataGrid = (props: Props) => {
-  const { data } = DataGridLogics();
+  const { handleAdd } = DataGridLogics();
+  const data = useSelector((state:any)=>state.CartSlice.filteredData)
   const theme = useTheme();
   const columns: GridColDef[] = [
     // { field: "market_cap_rank", headerName: "ID", width: 10 },
@@ -71,7 +74,7 @@ const CryptoDataGrid = (props: Props) => {
       field: "price_change_percentage_24h",
       headerName: "Price Change Percentage",
       type: "number",
-      width: 220,
+      width: 200,
       editable: true,
       headerAlign: "center",
       align: "center",
@@ -92,12 +95,14 @@ const CryptoDataGrid = (props: Props) => {
       field: "actions",
       headerName: "Actions",
       type: "actions",
-      width: 230,
+      width: 200,
       filterable: true,
       headerAlign: "right",
       align: "right",
       renderCell: (params) => (
         <Button
+        component={Link}
+        to={"/cart"}
           sx={{
             height: "31px",
             // width: "88px",
@@ -115,41 +120,11 @@ const CryptoDataGrid = (props: Props) => {
             color: theme.palette.info.main,
             backgroundColor: theme.palette.secondary.main,
           }}
-          //   startIcon={<AddOutlinedIcon />}
+          onClick={()=>handleAdd(params.row)}
         >
           ADD
         </Button>
       ),
-    },
-  ];
-  const datas = [
-    {
-      Image: "",
-      Symbol: 11,
-      current_price: 20,
-      market_cap: 22,
-      price_change_percentage_24h: 20,
-    },
-    {
-      Image: "",
-      Symbol: 11,
-      current_price: 20,
-      market_cap: 2,
-      price_change_percentage_24h: -20,
-    },
-    {
-      Image: "",
-      Symbol: 11,
-      current_price: 20,
-      market_cap: 22,
-      price_change_percentage_24h: 20,
-    },
-    {
-      Image: "",
-      Symbol: 11,
-      current_price: 20,
-      market_cap: 2,
-      price_change_percentage_24h: -20,
     },
   ];
   return (
@@ -173,11 +148,9 @@ const CryptoDataGrid = (props: Props) => {
               //   borderBottom: 5,
             },
           }}
-          rows={datas ? datas : []}
-          //   rows={data ? data : []}
+            rows={data ? data : []}
           columns={columns}
-          getRowId={(row: any) => row.market_cap}
-          //   getRowId={(row: any) => row.market_cap_rank}
+            getRowId={(row: any) => row.market_cap_rank}
           initialState={{
             pagination: {
               paginationModel: {

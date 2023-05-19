@@ -6,13 +6,10 @@ import Cart from "./Components/Cart";
 function App() {
   return (
     <>
-    <div >      
       <Routes>
         <Route path="/" element={<CryptoDataGrid />} />
         <Route path="/cart" element={<Cart />} />
       </Routes>
-      </div>
-
     </>
   );
 }

@@ -1,22 +1,27 @@
-import { useEffect } from "react";
+import { useEffect,useState } from "react";
 import { Button, Input } from "antd";
+import { useDispatch } from "react-redux";
+import { increaseCounter } from "../Redux/CartSlice";
 
-const QuantityBtn = ({}: any) => {
- 
+const QuantityBtn = ({setRowId,id}: any) => {
+ const [count,setCount] = useState(0)
+ const dispatch = useDispatch();
 
-//   const handleIncrement = () => {
-//     setCount(count + 1);
-//     setRowId(id ? id : 0);
-//   };
+  const handleIncrement = () => {
+    setCount(count + 1);
+    setRowId(id ? id : 0);
+    dispatch<any>(increaseCounter<any>(count+1))
+  };
 
-//   const handleDecrement = () => {
-//     if (count !== 0) {
-//       setCount(count - 1);
-//       setRowId(id ? id : 0);
-//     } else {
-//       setCount(0);
-//     }
-//   };
+  const handleDecrement = () => {
+    if (count !== 0) {
+      setCount(count - 1);
+      setRowId(id ? id : 0);
+      dispatch<any>(increaseCounter<any>(count-1))
+    } else {
+      setCount(0);
+    }
+  };
 
   return (
       <div style={{
@@ -38,16 +43,16 @@ const QuantityBtn = ({}: any) => {
             borderRight: "none",
             background: "none",
           }}
-        //   onClick={handleDecrement}
+          onClick={handleDecrement}
         >
           -
         </Button>
         <Input
           name="count"
-        //   value={count}
+          value={count}
           min={0}
           max={10}
-        //   onChange={(e) => setCount(e.target.value)}
+          onChange={(e) => setCount(e.target.value)}
           style={{
             border: "1px solid #d9d9d9",
             borderRadius: "0px",
@@ -67,7 +72,7 @@ const QuantityBtn = ({}: any) => {
             borderLeft: "none",
             background: "none",
           }}
-        //   onClick={handleIncrement}
+          onClick={handleIncrement}
         >
           +
         </Button>
