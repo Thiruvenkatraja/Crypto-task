@@ -5,7 +5,7 @@ import { cartData, filterDatas } from "../Redux/CartSlice";
 
 export const DataGridLogics = () => {
   const [data, setData] = React.useState<any>([]);
-  const [search, setSearch] = React.useState<any>();
+  const [search, setSearch] = React.useState<any>("");
   const dispatch = useDispatch();
   const getData = async () => {
     try {
