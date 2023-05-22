@@ -1,4 +1,3 @@
-import React from "react";
 import Box from "@mui/material/Box";
 import { Button } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
@@ -8,9 +7,8 @@ import { DataGridLogics } from "../Utils/DataGridLogics";
 import SearchInput from "./SearchInput";
 import { useSelector } from "react-redux";
 
-type Props = {};
 
-const CryptoDataGrid = (props: Props) => {
+const CryptoDataGrid = () => {
   const { handleAdd } = DataGridLogics();
   const data = useSelector((state:any)=>state.CartSlice.filteredData)
   const theme = useTheme();
