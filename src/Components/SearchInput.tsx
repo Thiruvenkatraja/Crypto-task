@@ -1,9 +1,9 @@
 import { Grid } from "@mui/material";
 import { Input } from "antd";
 import { DataGridLogics } from "../Utils/DataGridLogics";
-type Props = {};
 
-const SearchInput = (props: Props) => {
+
+const SearchInput = () => {
 const {search,handleSearch}=DataGridLogics();
   return (
     <Grid
