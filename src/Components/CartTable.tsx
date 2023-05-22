@@ -1,16 +1,12 @@
 import React from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { useTheme } from "@mui/material";
-import { DataGridLogics } from "../Utils/DataGridLogics";
 import QuantityBtn from "./QuantityBtn";
 import { useSelector } from "react-redux";
-type Props = {};
 
-const CartTable = (props: Props) => {
+const CartTable = () => {
   const [rowId, setRowId] = React.useState<number>(0);
   const cartData = useSelector((state: any) => state.CartSlice.cart);
   const counterValue = useSelector((state: any) => state.CartSlice.counter);
-  const theme = useTheme();
   const columns: GridColDef[] = [
     // { field: "market_cap_rank", headerName: "ID", width: 10 },
     {
