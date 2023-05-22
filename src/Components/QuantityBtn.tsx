@@ -1,10 +1,10 @@
-import { useEffect,useState } from "react";
+import { useState } from "react";
 import { Button, Input } from "antd";
 import { useDispatch } from "react-redux";
 import { increaseCounter } from "../Redux/CartSlice";
 
 const QuantityBtn = ({setRowId,id}: any) => {
- const [count,setCount] = useState(0)
+ const [count,setCount] = useState<number>(0)
  const dispatch = useDispatch();
 
   const handleIncrement = () => {
