@@ -1,11 +1,9 @@
-import React from "react";
 import Box from "@mui/material/Box";
 import CartTable from "./CartTable";
 import { useTheme } from "@mui/material";
 import { Button } from "@mui/material";
-type Props = {};
 
-const Cart = (props: Props) => {
+const Cart = () => {
     const theme = useTheme();
   return (
     <div
